@@ -1,33 +1,110 @@
-import { defineConfig } from 'vitepress'
+import { getPosts, getPostLength } from  "./theme/serverUtils";
 
-export default defineConfig({
-  head:[
-    [
-      "meta",
+async function config() {
+  return {
+    // base:'/docs',
+    lang: "en-US",
+    title: "四月清晨",
+    description: "Home of April",
+    head: [
+      [
+        "link",
+        {
+          rel: "icon",
+          // type: 'image/png',
+          type: "image/jpeg",
+          href: "/avator.jpg",
+        },
+      ],
+      [
+        "meta",
+        {
+          name: "author",
+          content: "April",
+        },
+      ],
+      [
+        "meta",
+        {
+          property: "og:title",
+          content: "Home",
+        },
+      ],
+      [
+        "meta",
+        {
+          property: "og:description",
+          content: "Home of Clark Cui",
+        },
+      ],
+    ],
+    // 暗黑模式
+    appearance: true,
+    
+    lastUpdated: '上次更新',
+
+    themeConfig: {
+      // repo: "clark-cui/homeSite",
+      docsDir: "/docs",
+      docsBranch: "master",
+      posts: await getPosts(),
+      pageSize: 5, //几个为一页
+      postLength: await getPostLength(), //博客有几篇
+
+      //       algolia: {
+      //         apiKey: "90a0bae6ff7307fb76896cbe2f975b0c",
+      //         indexName: "clark-cui-docs",
+      //       },
+
+      nav: [
+        {
+          text: "🏡首页",
+          link: "/",
+        },
+        {
+          text: "🔖Tags",
+          link: "/tags",
+        },
+        {
+          text: "📃Archives",
+          link: "/archives",
+        },
+      ],
+
+      // sidebar: {
+      //   "./posts/": false,
+      //   "/": false,
+      // },
+      sidebar: false,
+    
+      // 自定义icon
+
+      // socialLinks: [
+      //   { icon: 'github', link: 'https://github.com/vuejs/vitepress' },
+      // ],
+
+      docFooter: {
+        prev: 'Pagina prior',
+        next: 'Proxima pagina'
+      }
+    },
+    markdown: {
+      headers: {
+        level: [1, 2]
+      }
+    },
+    sidebar: [
       {
-        name: "viewport",
-        content:
-          "width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no",
+        text: 'Section Title A',
+        collapsible: true,
+        items: []
       },
-    ],
-    ["meta", { name: "keywords", content: "四月清晨" }],
-    ["link", { rel: "icon", href: "/favicon.ico" }],
-    // 引入 Gitalk
-    [
-      "link",
-      { rel: "stylesheet", href: "https://lib.baomitu.com/gitalk/1.7.0/gitalk.min.css" },
-    ],
-    ["script", { src: "https://lib.baomitu.com/gitalk/1.7.0/gitalk.min.js" }],
-    ["script", { src: "https://lib.baomitu.com/axios/0.21.1/axios.js" }]
-  ],
-  title:'四月清晨',
-  themeConfig: {
-    displayAllHeaders:true,
-    logo: '/favicon.ico',
-    author: "悲伤日记",
-    search: true,
-    socialLinks: [
-        { icon: 'github', link: 'https://github.com/JOYCEQL' }
-    ],
-  },
-})
+      {
+        text: 'Section Title B',
+        collapsible: true,
+        items: []
+      }
+    ]
+  };
+}
+export default config();
